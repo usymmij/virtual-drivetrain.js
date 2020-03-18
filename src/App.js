@@ -1,26 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <script src = "https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
     </div>
   );
 }
+
+function setup() {
+  return (
+    <script>
+    createCanvas(400, 400);
+    </script>
+  )
+}
+
+//function draw() {
+//  background(200);
+//}
 
 export default App;
