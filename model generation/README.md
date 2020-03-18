@@ -1,2 +1,2 @@
 # Model Generation
-VD uses a tensorflow keras model to accurately and precisely simulate any robot. The built in model was trained off of 4253's 2020 robot, *Shots Fired*, which has a 4 Falcon drivetrain operating on a 10.35:1 gear ratio. Shifting functionality may be added in a future update. 
+VD uses a tensorflow keras model to accurately and precisely simulate any robot. The built in model was trained off of team 4253's 2020 robot, *Shots Fired*, which has a 4 Falcon drivetrain operating on a 10.35:1 gear ratio. Shifting functionality may be added in a future update. 

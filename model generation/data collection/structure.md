@@ -1,6 +1,6 @@
 # network tables
 
- - timestamp
+ - time
  - angle
  - posR
  - posL
