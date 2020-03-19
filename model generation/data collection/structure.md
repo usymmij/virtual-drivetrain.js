@@ -16,7 +16,7 @@ inputL | "inputL"
 # numpy
  - input list
 
-   >The *input* list is 2 dimensional, where the first ddimension is used as an index for the data collected and the second dimension comprises of the following data in that order
+   >The *input* list is 2 dimensional, where the first dimension is used as an index for the data collected and the second dimension comprises of the following data in that order
 
    - timestamp
    - next timestamp
