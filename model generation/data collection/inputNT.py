@@ -3,57 +3,78 @@ import time
 from networktables import NetworkTables
 import numpy as np
 import logging
+# temporary placeholders for the data
+lastData = np.zeroes((10), dtype=float)
+currData = np.zeroes((10), dtype=float)
 
-lastData = [None] * 10
-currData = [None] * 10
+# buffer array that shows a freeze frame the data at the timestamp
+frozenArray = np.zeroes((2,10), dtype=float)
 
-inputArray = []
-answerArray = []
-
+# a list of the parameters for the NN that must be set, in the order as recieved from the Network
+# table
 parameterArray = [
     "time", "angle", "posR", "posL", "velR", "velL", "voutR", "voutL", "inputR", "inputL"
 ]
 
-if len(sys.argv) != 2:
-    print("Error: specify an IP to connect to!")
-    exit(0)
-ip = sys.argv[1]
-logging.basicConfig(level=logging.DEBUG)
-NetworkTables.initialize(server=ip)
-sd = NetworkTables.getTable("simulation")
+# the ip address and network table reference vars
+ip = "10.42.53.2"
+table = None
+ready = False
 
-def getShit(array):
-    global parameterArray
-    for p in range(len(parameterArray))
+filepath = "../dataset/"
+filename = "ShotsFiredLG"
+filesize = 2000
+firstFile = 0
+
+# the listener function called when a NT entry changes
+def entryChanged(table, key, value, isNew):
+    global frozenArray
+    global currData
+    global lastData
+
+    if key == "ready":
+        frozenArray[0] = lastData.copy()
+        frozenArray[1] = currData.copy()
+        ready = True
+        return
+    
+    indx = parameterArray.index(key)
+    lastData[indx] = currData[indx]
+    currData[indx] = value
+
+    print("valueChanged: key: '%s'; value: %s; isNew: %s" % (key, value, isNew))
+
+# the listener function called when a device connects
+def connectionListener(connected, info):
+    # prints out data about the connected device
+    print(info, "; Connected=%s" % connected)
+
+def setup():
+    global ip
+    global table
+
+    # if there was another argument sent, set the ip to it, otherwise use the default ip
+    if len(sys.argv) == 2:
+        ip = sys.argv[1]
+    logging.basicConfig(level=logging.DEBUG)
+
+    NetworkTables.initialize(server=ip)
+    NetworkTables.addConnectionListener(connectionListener, immediateNotify=True)
+    table = NetworkTables.getTable("simulation")
+    table.addEntryListener(listener=entryChanged, immediateNotify=True, key=None, localNotify=False)
 
 if __name__ == "__main__" :
-    global lastData
-    global currData
+    global frozenArray
+    global firstFile
 
-    lastData[0] = sd.getDouble("time")
-    lastData[1] = sd.getDouble("angle")
-    lastData[2] = sd.getDouble("posR")
-    lastData[3] = sd.getDouble("posL")
-    lastData[4] = sd.getDouble("velR")
-    lastData[5] = sd.getDouble("velL")
-    lastData[6] = sd.getDouble("voutR")
-    lastData[7] = sd.getDouble("voutL")
-    lastData[8] = sd.getDouble("inputR")
-    lastData[9] = sd.getDouble("inputL")
-    
+    setup()
+    storeArray = []
     while True:
-        currData[0] = sd.getDouble("time")
-        currData[1] = sd.getDouble("angle")
-        currData[2] = sd.getDouble("posR")
-        currData[3] = sd.getDouble("posL")
-        currData[4] = sd.getDouble("velR")
-        currData[5] = sd.getDouble("velL")
-        currData[6] = sd.getDouble("voutR")
-        currData[7] = sd.getDouble("voutL")
-        currData[8] = sd.getDouble("inputR")
-        currData[9] = sd.getDouble("inputL")
-
-        if lastData == currData:
-            continue
-
-        lastData = currData
+        if ready == True:
+            ready = False
+            # shape of storeArray is (-1, 2, 10) dytpe=float
+            storeArray.append(frozenArray)
+            if len(storeArray) > filesize:
+                np.save(filename + str(firstFile), storeArray)
+                storeArray = []
+                firstFile += 1

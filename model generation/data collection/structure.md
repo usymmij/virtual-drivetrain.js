@@ -12,6 +12,9 @@ voutR | "voutR"
 voutL | "voutL"
 inputR | "inputR"
 inputL | "inputL"
+ready | "ready"
+
+  > the ready entry is the one to be listened to, as it should be the last one to be updated. Once the 
 
 # numpy
  - input list
