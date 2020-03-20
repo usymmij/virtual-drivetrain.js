@@ -3,6 +3,7 @@ import time
 from networktables import NetworkTables
 import numpy as np
 import logging
+
 # temporary placeholders for the data
 lastData = np.zeroes((10), dtype=float)
 currData = np.zeroes((10), dtype=float)
