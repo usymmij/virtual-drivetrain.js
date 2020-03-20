@@ -5,11 +5,11 @@ import numpy as np
 import logging
 
 # temporary placeholders for the data
-lastData = np.zeroes((10), dtype=float)
-currData = np.zeroes((10), dtype=float)
+lastData = np.zeros((10), dtype=float)
+currData = np.zeros((10), dtype=float)
 
 # buffer array that shows a freeze frame the data at the timestamp
-frozenArray = np.zeroes((2,10), dtype=float)
+frozenArray = np.zeros((2,10), dtype=float)
 
 # a list of the parameters for the NN that must be set, in the order as recieved from the Network
 # table
@@ -33,6 +33,8 @@ def entryChanged(table, key, value, isNew):
     global currData
     global lastData
 
+    #print(key, " ", value)
+
     if key == "ready":
         frozenArray[0] = lastData.copy()
         frozenArray[1] = currData.copy()
@@ -43,7 +45,7 @@ def entryChanged(table, key, value, isNew):
     lastData[indx] = currData[indx]
     currData[indx] = value
 
-    print("valueChanged: key: '%s'; value: %s; isNew: %s" % (key, value, isNew))
+    #print("valueChanged: key: '%s'; value: %s; isNew: %s" % (key, value, isNew))
 
 # the listener function called when a device connects
 def connectionListener(connected, info):
@@ -65,8 +67,6 @@ def setup():
     table.addEntryListener(listener=entryChanged, immediateNotify=True, key=None, localNotify=False)
 
 if __name__ == "__main__" :
-    global frozenArray
-    global firstFile
 
     setup()
     storeArray = []
@@ -76,6 +76,7 @@ if __name__ == "__main__" :
             # shape of storeArray is (-1, 2, 10) dytpe=float
             storeArray.append(frozenArray)
             if len(storeArray) > filesize:
-                np.save(filename + str(firstFile), storeArray)
+                #uncomment this
+                np.save(filepath + filename + str(firstFile), storeArray)
                 storeArray = []
                 firstFile += 1
