@@ -1,0 +1,11 @@
+# Virtual Drivetrain
+- [ ] client
+  - [ ] VirtualDrivetrain.js
+    - [ ] constructor()
+      - [ ] mode: load
+      - [ ] set to defaults
+    - [ ] render()
+      - [ ] cal new pos + new angle from current state
+    - [ ] componentDidMount()
+      - [ ] N/A
+- [ ] api
