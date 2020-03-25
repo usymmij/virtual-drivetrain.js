@@ -7,7 +7,9 @@ export default class Bot {
         this.y = state.screen.height * state.screen.ratio / 2;
     }
 
-    render(context) {
+    render(state) {
+        const context = state.context;
+
         context.save();
 
         //setup colour and width
