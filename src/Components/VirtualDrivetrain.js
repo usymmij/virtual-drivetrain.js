@@ -38,6 +38,15 @@ export default class VirtualDrivetrain extends React.Component {
         let context = this.refs.canvas.getContext('2d')
         this.bot = new Bot(this.state);
         this.bot.render(context);
+
+        
+        this.setState({context:context});
+        requestAnimationFrame(() => {this.update()});
+    }
+
+    update() {
+        this.lastCalculation = Date.now;
+        //fucking run you piece of shit
     }
 
     render() {
