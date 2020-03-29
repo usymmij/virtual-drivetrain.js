@@ -4,16 +4,19 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <script src = "https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
+      hello <br></br>
+      hkljisbkjfbasjhsd
     </div>
   );
 }
 
 function setup() {
   return (
-    <script>
+    <div classname="p5setup">
+    <script src = "https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js">
     createCanvas(400, 400);
     </script>
+    </div>
   )
 }
 
