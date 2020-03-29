@@ -3,6 +3,7 @@
 }
 
 header {
+  background-color: #000000;
   color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -14,7 +15,6 @@ header {
 
 canvas {
   display: block;
-  background-color: #3000a0;
   position: absolute;
   top: 0;
   bottom: 0;

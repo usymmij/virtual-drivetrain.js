@@ -5,13 +5,22 @@ export default class Bot {
         this.angle = 0;
         this.x = state.screen.width * state.screen.ratio / 2;
         this.y = state.screen.height * state.screen.ratio / 2;
+        this.odometry = {
+            rightPos: 0,
+            leftPos: 0,
+            rightVel: 0,
+            leftVel: 0
+        }
+        this.state = state;
     }
 
-    render(state) {
-        const context = state.context;
+    moveUp() {
+        if(this.y <= this.state.screen.height*this.state.screen.ratio) this.y += 1;
+    }
+
+    render(context) {
 
         context.save();
-
         //setup colour and width
         context.strokeStyle = '#ffffff';
         context.fillStyle = '#ff00aa';
@@ -51,5 +60,7 @@ export default class Bot {
         context.stroke();
 
         context.restore();
+
+        return context;
     }
 }

@@ -29,7 +29,7 @@
     - angle
     - posR
     - posL
-    - velR
+    - velR 
     - velL
     - voutR
     - voutL
