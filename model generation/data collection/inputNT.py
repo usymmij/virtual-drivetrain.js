@@ -23,7 +23,7 @@ table = None
 ready = False
 
 filepath = "../dataset/"
-filename = "ShotsFiredLG"
+filename = "ShotsFiredLowGear"
 filesize = 2000
 firstFile = 0
 
