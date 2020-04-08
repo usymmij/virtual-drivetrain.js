@@ -24,7 +24,7 @@ ready = False
 
 filepath = "../dataset/"
 filename = "ShotsFiredLowGear"
-filesize = 2000
+filesize = 100
 firstFile = 0
 
 # the listener function called when a NT entry changes
@@ -35,6 +35,7 @@ def entryChanged(table, key, value, isNew):
 
     #print(key, " ", value)
 
+    print("valueChanged")
     if key == "ready":
         frozenArray[0] = lastData.copy()
         frozenArray[1] = currData.copy()
@@ -70,8 +71,11 @@ if __name__ == "__main__" :
 
     setup()
     storeArray = []
+    readyEntry = table.getEntry("ready")
+    readyEntry.setBoolean(False)
     while True:
         if ready == True:
+            print("read")  
             ready = False
             # shape of storeArray is (-1, 2, 10) dytpe=float
             storeArray.append(frozenArray)
@@ -80,3 +84,5 @@ if __name__ == "__main__" :
                 np.save(filepath + filename + str(firstFile), storeArray)
                 storeArray = []
                 firstFile += 1
+            readyEntry.setBoolean(False)
+        
